@@ -21,8 +21,8 @@ export default function AboutPage() {
   return (
     <main className="bg-black text-white">
       {/* ===== Trust strip (marquee) ===== */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="py-24 overflow-x-hidden">
+        <div className="mx-auto max-w-7xl px-6 overflow-x-hidden">
           <p className="text-center text-white/80 text-lg">
             Companies trusting{" "}
             <span className="text-[#D6FF21] font-semibold">Duo Media</span> for
@@ -56,6 +56,7 @@ export default function AboutPage() {
             <style jsx global>{`
               .logos-track {
                 width: max-content;
+                min-width: 100%;
                 animation: logos-left 24s linear infinite;
               }
               @keyframes logos-left {

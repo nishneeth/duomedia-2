@@ -94,66 +94,7 @@ export default function HowWeMakeItHappen() {
         </div>
       </div>
 
-      {/* keyframes */}
-      <style jsx>{`
-        @keyframes topLight {
-          0% {
-            transform: translateX(0);
-            opacity: 0;
-          }
-          15% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.8;
-          }
-          100% {
-            transform: translateX(240%);
-            opacity: 0;
-          }
-        }
-
-        @keyframes bottomLight {
-          0% {
-            transform: translateX(0);
-            opacity: 0;
-          }
-          20% {
-            opacity: 1;
-          }
-          55% {
-            opacity: 0.7;
-          }
-          100% {
-            transform: translateX(-240%);
-            opacity: 0;
-          }
-        }
-
-        @keyframes borderGlow {
-  0% {
-    box-shadow: 0 0 0 rgba(214,255,33,0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-    box-shadow:
-      0 0 18px rgba(214,255,33,0.25),
-      inset 0 0 12px rgba(214,255,33,0.18);
-  }
-  50% {
-    opacity: 0.7;
-    box-shadow:
-      0 0 28px rgba(214,255,33,0.35),
-      inset 0 0 18px rgba(214,255,33,0.25);
-  }
-  100% {
-    opacity: 0;
-    box-shadow: 0 0 0 rgba(214,255,33,0);
-  }
-}
-
-      `}</style>
+      {/* keyframes moved to globals.css */}
     </section>
   );
 }

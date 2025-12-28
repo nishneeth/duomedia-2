@@ -1,15 +1,14 @@
-import { useEffect, useMemo, useRef, CSSProperties } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { ShaderMaterial, WebGLRenderer, Vector2, Vector3, Color, OrthographicCamera, Scene, Mesh, PlaneGeometry } from 'three';
 import './ghostcursor-footer.css';
 
 interface GhostCursorProps {
   className?: string;
-  style?: CSSProperties;
+  style?: React.CSSProperties;
   trailLength?: number;
   inertia?: number;
   grainIntensity?: number;
@@ -27,40 +26,42 @@ interface GhostCursorProps {
   zIndex?: number;
 }
 
-const GhostCursor: React.FC<GhostCursorProps> = ({
-  className = '',
-  style = {},
+const GhostCursor = ({
+  className,
+  style,
   trailLength = 50,
   inertia = 0.5,
   grainIntensity = 0.05,
   bloomStrength = 0.1,
   bloomRadius = 1.0,
   bloomThreshold = 0.025,
+
   brightness = 1,
-  color = '#B19EEF',
+  color = '#D6FF21',
   mixBlendMode = 'screen',
   edgeIntensity = 0,
+
   maxDevicePixelRatio = 0.5,
   targetPixels,
+
   fadeDelayMs,
   fadeDurationMs,
   zIndex = 10
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<WebGLRenderer | null>(null);
+}: GhostCursorProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const composerRef = useRef<EffectComposer | null>(null);
-  const materialRef = useRef<ShaderMaterial | null>(null);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const bloomPassRef = useRef<UnrealBloomPass | null>(null);
   const filmPassRef = useRef<ShaderPass | null>(null);
-  const isMounted = useRef<boolean>(false);
 
-  const trailBufRef = useRef<Vector2[]>([]);
+  const trailBufRef = useRef<THREE.Vector2[]>([]);
   const headRef = useRef<number>(0);
 
   const rafRef = useRef<number | null>(null);
   const resizeObsRef = useRef<ResizeObserver | null>(null);
-  const currentMouseRef = useRef<Vector2>(new Vector2(0.5, 0.5));
-  const velocityRef = useRef<Vector2>(new Vector2(0, 0));
+  const currentMouseRef = useRef<THREE.Vector2>(new THREE.Vector2(0.5, 0.5));
+  const velocityRef = useRef<THREE.Vector2>(new THREE.Vector2(0, 0));
   const fadeOpacityRef = useRef<number>(1.0);
   const lastMoveTimeRef = useRef<number>(typeof performance !== 'undefined' ? performance.now() : Date.now());
   const pointerActiveRef = useRef<boolean>(false);
@@ -84,9 +85,6 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
   `;
 
   const fragmentShader = `
-    #define PI 3.14159265359
-    #define TWO_PI 6.28318530718
-
     uniform float iTime;
     uniform vec3  iResolution;
     uniform vec2  iMouse;
@@ -98,169 +96,79 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
     uniform float iEdgeIntensity;
     varying vec2  vUv;
 
-    // Improved noise function
-    float hash(vec3 p) { 
-        p  = fract(p * vec3(.1031, .1030, .0973));
-        p += dot(p, p.yxz+33.33);
-        return fract((p.x + p.y)*p.z); 
+    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7))) * 43758.5453123); }
+    float noise(vec2 p){
+      vec2 i = floor(p), f = fract(p);
+      f *= f * (3. - 2. * f);
+      return mix(mix(hash(i + vec2(0.,0.)), hash(i + vec2(1.,0.)), f.x),
+                 mix(hash(i + vec2(0.,1.)), hash(i + vec2(1.,1.)), f.x), f.y);
     }
-
-    // Gradient noise by iq
-    float noise(vec2 p) {
-        vec2 i = floor(p);
-        vec2 f = fract(p);
-        
-        vec2 u = f*f*(3.0-2.0*f);
-        
-        float a = hash(vec3(i, 0.0));
-        float b = hash(vec3(i + vec2(1.0, 0.0), 0.0));
-        float c = hash(vec3(i + vec2(0.0, 1.0), 0.0));
-        float d = hash(vec3(i + vec2(1.0, 1.0), 0.0));
-        
-        return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+    float fbm(vec2 p){
+      float v = 0.0;
+      float a = 0.5;
+      mat2 m = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
+      for(int i=0;i<5;i++){
+        v += a * noise(p);
+        p = m * p * 2.0;
+        a *= 0.5;
+      }
+      return v;
     }
+    vec3 tint1(vec3 base){ return mix(base, vec3(1.0), 0.15); }
+    vec3 tint2(vec3 base){ return mix(base, vec3(0.8, 0.9, 1.0), 0.25); }
 
-    // Fractional Brownian motion with more detail
-    float fbm(vec2 p) {
-        float v = 0.0;
-        float a = 0.5;
-        vec2 shift = vec2(100);
-        mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.5));
-        
-        for (int i = 0; i < 6; i++) {
-            v += a * noise(p);
-            p = rot * p * 2.0 + shift;
-            a *= 0.5;
-        }
-        
-        return v;
-    }
+    vec4 blob(vec2 p, vec2 mousePos, float intensity, float activity) {
+      vec2 q = vec2(fbm(p * iScale + iTime * 0.1), fbm(p * iScale + vec2(5.2,1.3) + iTime * 0.1));
+      vec2 r = vec2(fbm(p * iScale + q * 1.5 + iTime * 0.15), fbm(p * iScale + q * 1.5 + vec2(8.3,2.8) + iTime * 0.15));
 
-    // Create a flowing, smoke-like pattern with improved edge handling
-    vec4 createSmoke(vec2 uv, vec2 center, float intensity, float timeOffset) {
-        // Time with offset for variation
-        float t = iTime * 0.4 + timeOffset * 15.0;
-        
-        // Scale down UVs to keep pattern consistent at edges
-        vec2 scaledUV = uv * 0.9;
-        vec2 scaledCenter = center * 0.9;
-        
-        // Create flowing pattern with more turbulence
-        vec2 q = vec2(
-            fbm(scaledUV * 1.3 + vec2(t * 0.25, 0.0)),
-            fbm(scaledUV * 1.3 + vec2(5.2, 1.3) + t * 0.25)
-        );
-        
-        // Add more organic movement with different scales
-        vec2 r = vec2(
-            fbm(scaledUV * 0.8 + q * 1.5 + vec2(1.7, 9.2) + t * 0.12),
-            fbm(scaledUV * 0.8 + q * 1.5 + vec2(8.3, 2.8) + t * 0.15)
-        );
-        
-        // Vector from center to current point
-        vec2 toCenter = uv - center;
-        
-        // Create distortion based on noise and time
-        vec2 distortion = vec2(
-            fbm(uv * 1.1 + r * 1.2 + t * 0.08) - 0.5,
-            fbm(uv * 1.1 + r * 1.2 + vec2(3.4, 2.1) + t * 0.1) - 0.5
-        ) * 0.08;
-        
-        // Create wispy smoke pattern with edge awareness
-        float edgeFade = 1.0 - smoothstep(0.0, 0.1, max(abs(uv.x) - 0.95, abs(uv.y) - 0.95));
-        float pattern = fbm(uv * 1.8 + r * 1.5 + distortion * 3.0) * edgeFade;
-        
-        // Distance from center with some noise-based warping
-        float dist = length(toCenter + distortion * 0.3);
-        
-        // Create density falloff that's more organic
-        float density = 1.0 - smoothstep(0.0, 0.6, dist);
-        density = pow(density, 0.8);
-        
-        // Create alpha based on pattern and density
-        float alpha = pow(pattern, 2.2) * density * intensity;
-        
-        // Add some subtle pulsing
-        alpha *= 0.85 + 0.15 * sin(t * 0.4);
-        
-        // Edge-aware intensity
-        float edgeFactor = 1.0 - smoothstep(0.8, 0.95, abs(uv.x));
-        alpha *= edgeFactor;
-        
-        // Color with subtle variation
-        vec3 baseColor = iBaseColor;
-        vec3 highlight = mix(baseColor, vec3(1.0), 0.35);
-        vec3 color = mix(baseColor, highlight, pattern * 0.8);
-        
-        return vec4(color * alpha, alpha);
+      float smoke = fbm(p * iScale + r * 0.8);
+      float radius = 0.5 + 0.3 * (1.0 / iScale);
+      float distFactor = 1.0 - smoothstep(0.0, radius * activity, length(p - mousePos));
+      float alpha = pow(smoke, 2.5) * distFactor;
+
+      vec3 c1 = tint1(iBaseColor);
+      vec3 c2 = tint2(iBaseColor);
+      vec3 color = mix(c1, c2, sin(iTime * 0.5) * 0.5 + 0.5);
+
+      return vec4(color * alpha * intensity, alpha * intensity);
     }
 
     void main() {
-        // Normalized pixel coordinates (-1 to 1)
-        vec2 uv = (gl_FragCoord.xy / iResolution.xy * 2.0 - 1.0) * 
-                 vec2(iResolution.x / iResolution.y, 1.0);
-        vec2 mouse = (iMouse * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
+      vec2 uv = (gl_FragCoord.xy / iResolution.xy * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
+      vec2 mouse = (iMouse * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
 
-        vec3 color = vec3(0.0);
-        float alpha = 0.0;
+      vec3 colorAcc = vec3(0.0);
+      float alphaAcc = 0.0;
 
-        // Main cursor smoke
-        vec4 mainSmoke = createSmoke(uv, mouse, 1.0, 0.0);
-        color += mainSmoke.rgb;
-        alpha += mainSmoke.a;
+      vec4 b = blob(uv, mouse, 1.0, iOpacity);
+      colorAcc += b.rgb;
+      alphaAcc += b.a;
 
-        // Trail effect - create multiple layers of smoke
-        for (int i = 0; i < MAX_TRAIL_LENGTH; i++) {
-            float t = float(i) / float(MAX_TRAIL_LENGTH);
-            
-            // Skip if too small to be visible
-            if (t > 0.9) continue;
-            
-            // Get position from history
-            vec2 pm = (iPrevMouse[i] * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
-            
-            // Fade out the trail with a more gradual falloff
-            float trailIntensity = pow(1.0 - t, 2.0) * 0.5;
-            
-            // Add some time offset for variation
-            float timeOffset = float(i) * 0.05;
-            
-            // Create smoke at this trail position
-            vec4 trailSmoke = createSmoke(uv, pm, trailIntensity, timeOffset);
-            
-            // Additive blending for smoke
-            color += trailSmoke.rgb * trailSmoke.a;
-            alpha += trailSmoke.a;
+      for (int i = 0; i < MAX_TRAIL_LENGTH; i++) {
+        vec2 pm = (iPrevMouse[i] * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
+        float t = 1.0 - float(i) / float(MAX_TRAIL_LENGTH);
+        t = pow(t, 2.0);
+        if (t > 0.01) {
+          vec4 bt = blob(uv, pm, t * 0.8, iOpacity);
+          colorAcc += bt.rgb;
+          alphaAcc += bt.a;
         }
+      }
 
-        // Apply brightness and tone mapping
-        color = 1.0 - exp(-color * iBrightness * 2.0);
-        
-        // Edge fade with smoother transition and aspect ratio correction
-        vec2 uv01 = gl_FragCoord.xy / iResolution.xy;
-        float aspect = iResolution.x / iResolution.y;
-        
-        // More gradual edge fade, especially on the right side
-        float edgeFadeX = smoothstep(0.0, 0.15, min(uv01.x, 1.0 - uv01.x));
-        float edgeFadeY = smoothstep(0.0, 0.1, min(uv01.y, 1.0 - uv01.y));
-        float edgeMask = edgeFadeX * edgeFadeY;
-        
-        // Extra fade for right edge
-        float rightEdgeFade = smoothstep(0.9, 1.0, uv01.x);
-        edgeMask *= (1.0 - rightEdgeFade * 0.7);
-        
-        // Final color with edge fade and opacity
-        float finalAlpha = clamp(alpha * iOpacity * edgeMask, 0.0, 0.95);
-        
-        // Apply some color correction
-        color = pow(color, vec3(1.0/2.2)); // Gamma correction
-        
-        // Output final color with premultiplied alpha for better blending
-        gl_FragColor = vec4(color * finalAlpha, finalAlpha);
+      colorAcc *= iBrightness;
+
+      vec2 uv01 = gl_FragCoord.xy / iResolution.xy;
+      float edgeDist = min(min(uv01.x, 1.0 - uv01.x), min(uv01.y, 1.0 - uv01.y));
+      float distFromEdge = clamp(edgeDist * 2.0, 0.0, 1.0);
+      float k = clamp(iEdgeIntensity, 0.0, 1.0);
+      float edgeMask = mix(1.0 - k, 1.0, distFromEdge);
+
+      float outAlpha = clamp(alphaAcc * iOpacity * edgeMask, 0.0, 1.0);
+      gl_FragColor = vec4(colorAcc, outAlpha);
     }
   `;
 
-  const FilmGrainShader: any = useMemo(() => {
+  const FilmGrainShader = useMemo(() => {
     return {
       uniforms: {
         tDiffuse: { value: null },
@@ -326,10 +234,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
 
   useEffect(() => {
     const host = containerRef.current;
-    if (!host) return;
-    
-    const parent = host.parentElement;
-    if (!parent) return;
+    const parent = host?.parentElement;
     if (!host || !parent) return;
 
     const prevParentPos = parent.style.position;
@@ -337,7 +242,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
       parent.style.position = 'relative';
     }
 
-    const renderer = new WebGLRenderer({
+    const renderer = new THREE.WebGLRenderer({
       antialias: !isTouch,
       alpha: true,
       depth: false,
@@ -358,18 +263,18 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
 
     host.appendChild(renderer.domElement);
 
-    const scene = new Scene();
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-    const geom = new PlaneGeometry(2, 2);
+    const geom = new THREE.PlaneGeometry(2, 2);
 
     const maxTrail = Math.max(1, Math.floor(trailLength));
     trailBufRef.current = Array.from({ length: maxTrail }, () => new THREE.Vector2(0.5, 0.5));
     headRef.current = 0;
 
-    const baseColor = new Color(color);
+    const baseColor = new THREE.Color(color);
 
-    const material = new ShaderMaterial({
+    const material = new THREE.ShaderMaterial({
       defines: { MAX_TRAIL_LENGTH: maxTrail },
       uniforms: {
         iTime: { value: 0 },
@@ -390,7 +295,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
     });
     materialRef.current = material;
 
-    const mesh = new Mesh(geom, material);
+    const mesh = new THREE.Mesh(geom, material);
     scene.add(mesh);
 
     const composer = new EffectComposer(renderer);
@@ -399,7 +304,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    const bloomPass = new UnrealBloomPass(new Vector2(1, 1), bloomStrength, bloomRadius, bloomThreshold);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), bloomStrength, bloomRadius, bloomThreshold);
     bloomPassRef.current = bloomPass;
     composer.addPass(bloomPass);
 
@@ -431,7 +336,6 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
       const wpx = Math.max(1, Math.floor(cssW * pixelRatio));
       const hpx = Math.max(1, Math.floor(cssH * pixelRatio));
       material.uniforms.iResolution.value.set(wpx, hpx, 1);
-      material.uniformsNeedUpdate = true;
       material.uniforms.iScale.value = calculateScale(host);
       bloomPass.setSize(wpx, hpx);
     };
@@ -449,8 +353,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
 
       const mat = materialRef.current;
       const comp = composerRef.current;
-      
-      // Add null checks for material and composer
+
       if (!mat || !comp) {
         runningRef.current = false;
         rafRef.current = null;
@@ -611,25 +514,9 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
     }
   }, [mixBlendMode]);
 
-  const mergedStyle: CSSProperties = useMemo(() => ({
-    ...style,
-    zIndex,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    pointerEvents: 'none',
-    opacity: 1,
-    visibility: 'visible',
-    transform: 'translateZ(0)' // Force hardware acceleration
-  }), [zIndex, style]);
+  const mergedStyle = useMemo(() => ({ zIndex, ...style }), [zIndex, style]);
 
-  return <div 
-    ref={containerRef} 
-    className={`ghost-cursor ${className}`.trim()} 
-    style={mergedStyle} 
-  />;
+  return <div ref={containerRef} className={`ghost-cursor ${className ?? ''}`} style={mergedStyle} />;
 };
 
 export default GhostCursor;

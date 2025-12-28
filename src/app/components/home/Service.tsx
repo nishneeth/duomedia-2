@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import { poppins } from "@/app/fonts";
+import FlowingMenu from "./FlowingMenu";
+
 
 /* --- Heading style --- */
 const headingFont = poppins;
@@ -128,6 +130,39 @@ export default function ServicesPage() {
           </Link>
         </div>
       </section>
+      {/* CTA row */}
+<div className="mt-10 mb-6 flex items-center justify-center gap-4">
+  ...
+</div>
+
+{/* ===== Floating Flowing Menu ===== */}
+<div className="mt-16 rounded-[28px] overflow-hidden ring-1 ring-white/10 bg-black h-[60vh]">
+  <FlowingMenu
+    items={[
+      {
+        text: "Campaign Planning",
+        link: "/services",
+        image: "/services/star.png",
+      },
+      {
+        text: "Creator Outreach",
+        link: "/services",
+        image: "/services/star.png",
+      },
+      {
+        text: "Content Strategy",
+        link: "/services",
+        image: "/services/star.png",
+      },
+      {
+        text: "Performance Marketing",
+        link: "/projects",
+        image: "/services/star.png",
+      },
+    ]}
+  />
+</div>
+
 
       {/* ====== PICK YOUR POWER MODE ====== */}
       <section className="mx-auto max-w-7xl px-6 pb-20 pt-10">
