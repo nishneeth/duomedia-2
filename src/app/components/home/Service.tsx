@@ -140,22 +140,32 @@ export default function ServicesPage() {
   <FlowingMenu
     items={[
       {
-        text: "Campaign Planning",
+        text: "Brainy Campaign Planning",
         link: "/services",
         image: "/services/star.png",
       },
       {
-        text: "Creator Outreach",
+        text: "Creator Outreach & Negotiation",
         link: "/services",
         image: "/services/star.png",
       },
       {
-        text: "Content Strategy",
+        text: "Content Coordination & Scripting",
         link: "/services",
         image: "/services/star.png",
       },
       {
-        text: "Performance Marketing",
+        text: "Testimonials & Performance Content",
+        link: "/projects",
+        image: "/services/star.png",
+      },
+      {
+        text: "KPI Tracking & Reporting",
+        link: "/projects",
+        image: "/services/star.png",
+      },
+      {
+        text: "Full-Funnel Strategy",
         link: "/projects",
         image: "/services/star.png",
       },
@@ -234,14 +244,49 @@ function ServiceCard({
 
   return (
     <div
-      className={[
-        "relative overflow-hidden rounded-[28px] ring-1 min-h-[260px]",
-        solidLime
-          ? "bg-[#D6FF21] ring-[#D6FF21]/60 text-black"
-          : "bg-gradient-to-b from-white via-white to-[#D6FF21]/65 ring-white/10 text-black",
-        className,
-      ].join(" ")}
-    >
+  className={[
+  "relative rounded-[28px] min-h-[260px]",
+  "bg-gradient-to-b from-[#111] via-[#0d0d0d] to-[#090909] text-white",
+  "overflow-hidden",
+  "isolate",
+  className,
+].join(" ")}
+
+>
+  
+
+  {/* 🔥 GLOW BORDER LAYER */}
+<span
+  aria-hidden
+  className="pointer-events-none absolute inset-0 rounded-[28px]
+             ring-4 ring-[#D6FF21]/0
+             animate-[borderGlow_4.5s_ease-in-out_infinite]"
+/>
+
+{/* 🔥 TOP travelling light */}
+<span
+  aria-hidden
+  className="pointer-events-none absolute top-0 left-[-40%]
+             h-[3px] w-[60%]
+             bg-gradient-to-r from-transparent via-[#D6FF21]/90 to-transparent
+             animate-[topLight_4.5s_ease-in-out_infinite]
+             blur-sm
+             z-10
+             mix-blend-screen"
+/>
+
+{/* 🔥 BOTTOM travelling light */}
+<span
+  aria-hidden
+  className="pointer-events-none absolute bottom-0 right-[-40%]
+             h-[3px] w-[60%]
+             bg-gradient-to-l from-transparent via-[#D6FF21]/80 to-transparent
+             animate-[bottomLight_4.5s_ease-in-out_infinite]
+             blur-sm
+             z-10
+             mix-blend-screen"
+/>
+
       <div className={["relative z-10 p-6 md:p-7 lg:p-8", hasArt ? "md:pr-[48%]" : ""].join(" ")}>
         <h3
           className={`${headingFont.className} whitespace-pre-line text-[34px] leading-[0.95] md:text-[40px] font-extrabold tracking-tight`}
@@ -250,15 +295,15 @@ function ServiceCard({
         </h3>
 
         {body && (
-          <p className="mt-3 text-[15px] md:text-base text-black/80 max-w-[32ch]">{body}</p>
+          <p className="mt-3 text-[15px] md:text-base text-white max-w-[32ch]">{body}</p>
         )}
 
         {href && <Link href={href} className="absolute inset-0" aria-label={title || "Know us"} />}
 
         {href && (
           <div className="absolute right-2 bottom-0">
-            <div className="grid place-items-center size-24 md:size-28 rounded-full bg-black/5">
-              <ArrowUpRight className="size-16 text-black" strokeWidth={3.5} />
+            <div className="grid place-items-center size-24 md:size-28 rounded-full bg-white/5">
+              <ArrowUpRight className="size-16 text-white" strokeWidth={3.5} />
             </div>
           </div>
         )}
@@ -275,7 +320,7 @@ function ServiceCard({
             loop
             playsInline
             preload="metadata"
-            className="w-full h-full rounded-2xl object-cover shadow-xl ring-1 ring-black/10"
+            className="w-full h-full rounded-2xl object-cover shadow-xl ring-1 ring-white/10"
           />
         </div>
       ) : img ? (

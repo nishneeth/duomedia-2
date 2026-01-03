@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3002",
+    "dev": "next dev -p 3004",
     "build": "next build",
-    "start": "next start -p 3002",
+    "start": "next start -p 3004",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,6 +14,8 @@
     "gsap": "^3.14.2",
     "lucide-react": "^0.539.0",
     "next": "15.4.6",
+    "ogl": "^1.0.11",
+    "postprocessing": "^6.38.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",

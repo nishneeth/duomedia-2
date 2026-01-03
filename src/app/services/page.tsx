@@ -199,10 +199,10 @@ function ServiceCard({
   return (
     <div
       className={[
-        "relative overflow-hidden rounded-[28px] ring-1 min-h-[260px]",
+        "relative overflow-hidden rounded-[28px] ring-1 min-h-[260px] border border-white/10",
         solidLime
-          ? "bg-[#D6FF21] ring-[#D6FF21]/60 text-black"
-          : "bg-gradient-to-b from-white via-white to-[#D6FF21]/65 ring-white/10 text-black",
+            ? "bg-black ring-white/20 text-white"
+            : "bg-black ring-white/15 text-white",
         className,
       ].join(" ")}
     >
@@ -214,7 +214,7 @@ function ServiceCard({
         </h3>
 
         {body && (
-          <p className="mt-3 text-[15px] md:text-base text-black/80 max-w-[32ch]">{body}</p>
+          <p className="mt-3 text-[15px] md:text-base text-white max-w-[32ch]">{body}</p>
         )}
 
         {href && <Link href={href} className="absolute inset-0" aria-label={title || "Know us"} />}
@@ -222,7 +222,7 @@ function ServiceCard({
         {href && (
           <div className="absolute right-2 bottom-0">
             <div className="grid place-items-center size-24 md:size-28 rounded-full bg-black/5">
-              <ArrowUpRight className="size-16 text-black" strokeWidth={3.5} />
+              <ArrowUpRight className="size-16 text-white" strokeWidth={3.5} />
             </div>
           </div>
         )}
@@ -239,7 +239,7 @@ function ServiceCard({
             loop
             playsInline
             preload="metadata"
-            className="w-full h-full rounded-2xl object-cover shadow-xl ring-1 ring-black/10"
+            className="w-full h-full rounded-2xl object-cover shadow-xl ring-1 ring-white/10"
           />
         </div>
       ) : img ? (

@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${poppins.variable} font-sans`}
       suppressHydrationWarning
     >
-      <body className="bg-[#0b0b0b] text-white antialiased">
+      <body className="bg-[#0b0b0b] text-white antialiased overflow-x-hidden">
         <Navbar/>
         {children}
         <Footer/>
