@@ -63,11 +63,15 @@ export default function ScrollReveal({
     if (!el) return;
 
     const words = el.querySelectorAll(".word");
+    
+    // Add animating class during animation
+    words.forEach(word => word.classList.add('animating'));
 
     // Smooth scroll configuration with better performance
     ScrollTrigger.config({
       autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
       limitCallbacks: true,
+      ignoreMobileResize: true, // Prevent unnecessary refresh on mobile
     });
 
    /* 🔄 Smooth rotation with optimized scrub */
@@ -115,6 +119,8 @@ gsap.fromTo(
 );
 
     return () => {
+      // Clean up animations
+      words.forEach(word => word.classList.remove('animating'));
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [enableBlur, baseOpacity, baseRotation, blurStrength]);
@@ -133,7 +139,7 @@ gsap.fromTo(
 
         .scroll-reveal .word {
           display: inline-block;
-          will-change: opacity, filter, transform;
+          /* will-change only during animation (handled by JS) */
         }
       `}</style>
 

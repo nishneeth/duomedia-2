@@ -16,41 +16,45 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Prevent scroll jank */
+  -webkit-overflow-scrolling: touch;
 }
 
-/* GPU Acceleration for animations */
-* {
+/* Reduced GPU acceleration - only when needed */
+*:not(#lights):not(.hyperspeed-canvas) {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  perspective: 1000px;
-  -webkit-perspective: 1000px;
 }
 
 /* Optimize scroll performance */
 body {
   overscroll-behavior-y: none;
   scroll-behavior: smooth;
+  /* Contain layout/paint for better performance */
+  contain: layout style;
 }
 
-/* Improve animation performance */
-[class*="motion"], 
-[class*="animate"],
+/* Improve animation performance - only apply will-change when animating */
 .word {
   will-change: auto;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+}
+
+.word.animating {
+  will-change: opacity, filter, transform;
 }
 
 /* Reduce layout shifts */
 img, video {
-  will-change: auto;
-  transform: translateZ(0);
+  content-visibility: auto;
 }
 
 /* Optimize for touch devices */

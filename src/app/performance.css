@@ -1,0 +1,71 @@
+/* Performance optimizations for smooth scrolling */
+
+/* Prevent layout shifts during scroll */
+.scroll-container {
+  contain: layout style paint;
+}
+
+/* Optimize Three.js canvas rendering */
+#lights,
+#lights > * {
+  will-change: auto !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Reduce repaints on scroll */
+section {
+  contain: layout style;
+}
+
+/* Optimize images and videos */
+img, video {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Framer Motion optimization */
+[data-framer-component] {
+  will-change: auto;
+}
+
+/* Only apply will-change during active animations */
+.animating {
+  will-change: transform, opacity, filter;
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize scroll performance on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Reduce animation complexity on mobile */
+  .word {
+    filter: none !important;
+  }
+}
+
+/* Debounce scroll events */
+html {
+  scroll-padding-top: 0;
+  scroll-snap-stop: normal;
+}
+
+/* Prevent unnecessary reflows */
+* {
+  box-sizing: border-box;
+}
+
+/* Optimize text rendering */
+p, h1, h2, h3, h4, h5, h6, span {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}

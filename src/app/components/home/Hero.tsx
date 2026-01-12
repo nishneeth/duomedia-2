@@ -1,4 +1,5 @@
 "use client";
+import { memo, useMemo } from "react";
 import Link from "next/link";
 import SectionHeading from "./SectionHeading";
 import { motion } from "framer-motion";
@@ -6,8 +7,10 @@ import { motion } from "framer-motion";
 import GradientBlinds from "./GradientBlinds";
 import Hyperspeed from "./Hyperspeed"
 
+// Memoize Hyperspeed to prevent re-renders
+const MemoHyperspeed = memo(Hyperspeed);
 
-export default function Hero() {
+function Hero() {
   return (
     <section
       className="relative overflow-hidden bg-[#0b0b0b] min-h-screen flex items-center"
@@ -24,8 +27,8 @@ export default function Hero() {
       }}
     >
     {/* ✅ HYPERSPEED — ABSOLUTE BACKGROUND */}
-      <div className="absolute inset-0 z-0">
-        <Hyperspeed
+      <div className="absolute inset-0 z-0" style={{ willChange: 'transform' }}>
+        <MemoHyperspeed
           effectOptions={{
             onSpeedUp: () => {},
             onSlowDown: () => {},
@@ -171,3 +174,5 @@ export default function Hero() {
     </section>
   );
 }
+
+export default memo(Hero);

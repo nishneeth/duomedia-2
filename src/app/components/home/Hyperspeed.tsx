@@ -1,12 +1,12 @@
 // @ts-nocheck
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
 import './HyperSpeed.css';
 
-const Hyperspeed = ({
+const Hyperspeed = memo(({
   effectOptions = {
     onSpeedUp: () => {},
     onSlowDown: () => {},
@@ -1120,6 +1120,8 @@ const Hyperspeed = ({
   }, [effectOptions]);
 
   return <div id="lights" ref={hyperspeed}></div>;
-};
+});
+
+Hyperspeed.displayName = 'Hyperspeed';
 
 export default Hyperspeed;
