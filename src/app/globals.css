@@ -12,6 +12,55 @@
   font-family: var(--font-display), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/* ===== SMOOTH SCROLLING OPTIMIZATIONS ===== */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* GPU Acceleration for animations */
+* {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Optimize scroll performance */
+body {
+  overscroll-behavior-y: none;
+  scroll-behavior: smooth;
+}
+
+/* Improve animation performance */
+[class*="motion"], 
+[class*="animate"],
+.word {
+  will-change: auto;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Reduce layout shifts */
+img, video {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
 /* Tell Tailwind about our font tokens (v4, config-less) */
 /* @theme at-rule removed: not supported by PostCSS in this project. Fonts are declared using :root above. */
 
@@ -19,6 +68,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-display), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Global animated keyframes used by several components */
@@ -110,6 +161,40 @@ body {
   100% {
     opacity: 0;
   }
+}
+
+/* ===== ADDITIONAL PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Optimize GSAP animations */
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  display: none !important;
+}
+
+/* Reduce motion for accessibility and performance on request */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize canvas and WebGL elements */
+canvas {
+  will-change: auto;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Improve paint performance */
+main,
+section,
+article {
+  contain: layout style;
 }
 
 .css-lightning {

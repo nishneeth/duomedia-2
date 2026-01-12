@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from "@/app/gsap-config";
 
 type Props = {
   children: string;
@@ -67,28 +64,35 @@ export default function ScrollReveal({
 
     const words = el.querySelectorAll(".word");
 
-   /* 🔄 Smooth rotation */
+    // Smooth scroll configuration with better performance
+    ScrollTrigger.config({
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+      limitCallbacks: true,
+    });
+
+   /* 🔄 Smooth rotation with optimized scrub */
 gsap.fromTo(
   el,
   { rotate: baseRotation },
   {
     rotate: 0,
-    ease: "none",
+    ease: "power1.out",
     scrollTrigger: {
       trigger: el,
       start: "top bottom+=10%",
       end: "bottom top-=10%",
-      scrub: 1.8, // ⏩ slightly faster
+      scrub: 0.5, // Lower value = smoother
+      invalidateOnRefresh: true,
     },
   }
 );
 
-/* ✨ Balanced blur reveal */
+/* ✨ Balanced blur reveal with better performance */
 gsap.fromTo(
   words,
   {
     opacity: baseOpacity,
-    filter: enableBlur ? `blur(${blurStrength - 2}px)` : "none", // 👈 faster blur clear
+    filter: enableBlur ? `blur(${blurStrength - 2}px)` : "none",
     y: 14,
   },
   {
@@ -96,19 +100,19 @@ gsap.fromTo(
     filter: "blur(0px)",
     y: 0,
     stagger: {
-      each: 0.04, // 👈 slightly quicker
+      each: 0.03,
+      ease: "power1.out",
     },
-    ease: "none",
+    ease: "power1.out",
     scrollTrigger: {
       trigger: el,
-      start: "top bottom+=18%", // 👈 starts earlier
-      end: "bottom top-=18%",   // 👈 ends sooner
-      scrub: 1.6,               // 👈 faster response
+      start: "top bottom+=18%",
+      end: "bottom top-=18%",
+      scrub: 0.5, // Lower value = smoother response
+      invalidateOnRefresh: true,
     },
   }
 );
-
-
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());

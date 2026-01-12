@@ -52,10 +52,16 @@ export default function VideoMarquee() {
           width: max-content;
           animation: marquee-right 30s linear infinite;
           padding: 0 1rem;
+          transform: translateZ(0);
+          will-change: transform;
+        }
+        .marquee-track video {
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
         @keyframes marquee-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0%); }
+          0% { transform: translate3d(-50%, 0, 0); }
+          100% { transform: translate3d(0%, 0, 0); }
         }
       `}</style>
     </section>

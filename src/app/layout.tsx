@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import "./globals.css";
+import "./gsap-config"; // Initialize GSAP configuration
 import type { Metadata } from "next";
 import { poppins } from "./fonts";
 import Navbar from "./components/common/Navbar";
@@ -14,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${poppins.variable} font-sans`}
+      className={`${poppins.variable} font-sans scroll-smooth`}
       suppressHydrationWarning
     >
       <body className="bg-[#0b0b0b] text-white antialiased overflow-x-hidden">
