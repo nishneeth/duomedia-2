@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-      <div className="mx-auto flex items-center justify-between max-w-7xl px-6 py-4">
+      <div className="mx-auto flex items-center justify-between max-w-7xl px-4 sm:px-6 py-3 sm:py-4">
         {/* Logo → go to home */}
         <Link
   href="/"
@@ -43,7 +43,7 @@ export default function Navbar() {
     alt="Duo Media Logo"
     width={120}
     height={40}
-    className="h-12 w-auto"
+    className="h-9 sm:h-10 md:h-12 w-auto"
   />
 </Link>
 
@@ -71,7 +71,7 @@ export default function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-white/80 hover:text-[#D6FF21] text-2xl"
+          className="md:hidden text-white/80 hover:text-[#D6FF21] text-2xl p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Toggle menu"
           aria-expanded={open}
         >
@@ -82,14 +82,14 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       {open && (
         <div className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10">
-          <nav className="flex flex-col gap-2 p-6">
+          <nav className="flex flex-col gap-3 p-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`${baseLink} ${isActive(link.href) ? activeLink : "text-white/80 hover:text-[#D6FF21] hover:bg-white/5"}`}
+                className={`${baseLink} text-center ${isActive(link.href) ? activeLink : "text-white/80 hover:text-[#D6FF21] hover:bg-white/5"}`}
               >
                 {link.name}
               </Link>
@@ -97,7 +97,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-[#D6FF21] px-5 py-2 text-center font-semibold text-black hover:shadow-[0_4px_20px_rgba(214,255,33,0.4)]"
+              className="mt-2 rounded-full bg-[#D6FF21] px-5 py-3 text-center font-semibold text-black hover:shadow-[0_4px_20px_rgba(214,255,33,0.4)] min-h-[48px] flex items-center justify-center"
             >
               Chat With Us
             </Link>

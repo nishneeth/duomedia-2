@@ -64,15 +64,15 @@ export default function Testimonials() {
   const items = useMemo(() => [...testimonials, ...testimonials], []);
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-12 sm:py-16 md:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
           title="What our clients say"
           subtitle="Here’s why smart brands stick with us (and brag about it later)"
         />
 
         {/* Slider */}
-        <div className="mt-10 relative overflow-hidden group">
+        <div className="mt-8 sm:mt-10 relative overflow-hidden group">
           {/* Edge fade mask */}
           <div
             className="pointer-events-none absolute inset-0 z-10"
@@ -84,14 +84,14 @@ export default function Testimonials() {
             }}
           />
 
-          <div className="t-track flex items-stretch gap-6 will-change-transform">
+          <div className="t-track flex items-stretch gap-4 sm:gap-5 md:gap-6 will-change-transform">
             {items.map((t, i) => (
               <figure
                 key={`${t.name}-${i}`}
-                className="t-card shrink-0 w-[320px] md:w-[380px] rounded-[28px] bg-white/5 ring-1 ring-white/10 p-6"
+                className="t-card shrink-0 w-[280px] sm:w-[320px] md:w-[380px] rounded-[20px] sm:rounded-[24px] md:rounded-[28px] bg-white/5 ring-1 ring-white/10 p-5 sm:p-6"
               >
-                <p className="text-lg md:text-xl leading-relaxed">{t.quote}</p>
-                <figcaption className="mt-6 text-sm">
+                <p className="text-base sm:text-lg md:text-xl leading-relaxed">{t.quote}</p>
+                <figcaption className="mt-5 sm:mt-6 text-xs sm:text-sm">
                   <p className="font-semibold">{t.name}</p>
                   <p className="text-white/70 italic">{t.title}</p>
                 </figcaption>

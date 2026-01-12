@@ -35,6 +35,13 @@
   font-size: 6vh;
 }
 
+/* Mobile responsive font size */
+@media (max-width: 640px) {
+  .menu__item-link {
+    font-size: 4vh;
+  }
+}
+
 .menu__item-link:hover {
   color: #060010;
 }
@@ -81,6 +88,13 @@
   font-size: 5.5vh;
   line-height: 1.2;
   padding: 1vh 1vw 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .marquee span {
+    font-size: 3.5vh;
+  }
 }
 
 .marquee__img {

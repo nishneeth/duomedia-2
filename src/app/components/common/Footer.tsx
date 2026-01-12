@@ -30,7 +30,7 @@ export default function Footer() {
 
       {/* ✅ FOOTER CONTENT (TOP MOST) */}
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10">
 
           <div>
             <Link href="/" className="inline-flex items-center">
@@ -40,33 +40,34 @@ export default function Footer() {
                 width={70}
                 height={72}
                 priority
+                className="h-14 sm:h-16 w-auto"
               />
             </Link>
-            <p className="mt-4 text-white/70 max-w-xs">
+            <p className="mt-3 sm:mt-4 text-white/70 max-w-xs text-sm sm:text-base">
               Creative influencer campaigns that move products and build brands.
             </p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">Quick Links</h3>
-            <Link href="/">Home</Link>
-            <Link href="/services">Services</Link>
-            <Link href="/projects">Portfolio</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
+            <h3 className="font-semibold mb-1 sm:mb-2 text-base sm:text-lg">Quick Links</h3>
+            <Link href="/" className="text-sm sm:text-base hover:text-[#D6FF21] transition-colors">Home</Link>
+            <Link href="/services" className="text-sm sm:text-base hover:text-[#D6FF21] transition-colors">Services</Link>
+            <Link href="/projects" className="text-sm sm:text-base hover:text-[#D6FF21] transition-colors">Portfolio</Link>
+            <Link href="/about" className="text-sm sm:text-base hover:text-[#D6FF21] transition-colors">About</Link>
+            <Link href="/contact" className="text-sm sm:text-base hover:text-[#D6FF21] transition-colors">Contact</Link>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-2">Follow Us</h3>
-            <div className="flex gap-4 text-xl">
-              <FaFacebookF />
-              <FaInstagram />
-              <FaLinkedinIn />
+            <h3 className="font-semibold mb-2 text-base sm:text-lg">Follow Us</h3>
+            <div className="flex gap-3 sm:gap-4 text-lg sm:text-xl">
+              <FaFacebookF className="cursor-pointer hover:text-[#D6FF21] transition-colors" />
+              <FaInstagram className="cursor-pointer hover:text-[#D6FF21] transition-colors" />
+              <FaLinkedinIn className="cursor-pointer hover:text-[#D6FF21] transition-colors" />
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 py-4 text-center text-sm text-white/60">
+        <div className="border-t border-white/10 py-3 sm:py-4 text-center text-xs sm:text-sm text-white/60 px-4">
           © {new Date().getFullYear()} Duo Media. All rights reserved.
         </div>
       </div>

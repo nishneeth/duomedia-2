@@ -175,16 +175,16 @@ export default function ServicesPage() {
 
 
       {/* ====== PICK YOUR POWER MODE ====== */}
-      <section className="mx-auto max-w-7xl px-6 pb-20 pt-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-12 sm:pb-16 md:pb-20 pt-8 sm:pt-10">
         <div className="text-center">
           <h2
-            className={`${headingFont.className} text-[#D6FF21] text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
+            className={`${headingFont.className} text-[#D6FF21] text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
           >
             Pick Your Power Mode
           </h2>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="mt-8 sm:mt-10 grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
           <PlanCard
             title={"Classic Influencer\nMarketing (IG + YT)"}
             chip="Most Popular"

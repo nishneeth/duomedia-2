@@ -13,7 +13,7 @@ export default function VideoMarquee() {
   const items = useMemo(() => [...sources, ...sources], []); // duplicate for seamless loop
 
   return (
-    <section className="py-6 md:py-10">
+    <section className="py-4 sm:py-6 md:py-10">
       <div className="relative overflow-hidden">
         {/* fade masks on edges */}
         <div
@@ -25,11 +25,11 @@ export default function VideoMarquee() {
           }}
         />
 
-        <div className="marquee-track flex gap-4 will-change-transform">
+        <div className="marquee-track flex gap-3 sm:gap-4 will-change-transform">
           {items.map((src, i) => (
             <div
               key={i}
-              className="shrink-0 w-[220px] md:w-[260px] rounded-[24px] overflow-hidden bg-white/5 ring-1 ring-white/10"
+              className="shrink-0 w-[180px] sm:w-[220px] md:w-[260px] rounded-[16px] sm:rounded-[20px] md:rounded-[24px] overflow-hidden bg-white/5 ring-1 ring-white/10"
             >
               {/* Replace poster with your thumbnails if needed */}
               <video
@@ -39,7 +39,7 @@ export default function VideoMarquee() {
                 playsInline
                 autoPlay
                 preload="metadata"
-                className="block h-[380px] md:h-[440px] w-full object-cover"
+                className="block h-[320px] sm:h-[360px] md:h-[440px] w-full object-cover"
               />
             </div>
           ))}

@@ -117,40 +117,40 @@ Excited to collaborate!`;
   return (
     <main className="bg-[#0b0b0b] text-white">
       {/* ===== Top Heading (down from navbar) ===== */}
-      <section className="mx-auto max-w-7xl px-6 pt-28 md:pt-36 pb-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28 lg:pt-36 pb-8 sm:pb-10">
         <div className="text-center">
           <h1
-            className={`${heading} text-[#D6FF21] text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
+            className={`${heading} text-[#D6FF21] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
           >
             Forms That Don’t Suck
           </h1>
-          <p className="mt-4 text-white/70 max-w-3xl mx-auto">
+          <p className="mt-3 sm:mt-4 text-white/70 max-w-3xl mx-auto text-sm sm:text-base px-4 sm:px-0">
             Here’s why smart brands stick with us (and brag about it later)
           </p>
         </div>
       </section>
 
       {/* ===== Tabs + Two Column Layout ===== */}
-      <section className="mx-auto max-w-7xl px-6 pb-20">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-12 sm:pb-16 md:pb-20">
         {/* Tabs */}
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-2 sm:gap-3">
           <TabPill active={isBrand} onClick={() => setTab("brand")} label="I am Brand" />
           <TabPill active={!isBrand} onClick={() => setTab("influencer")} label="I am Influencer" />
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10">
           {/* Left Copy */}
           <div className="lg:col-span-5">
-            <h2 className={`${heading} text-3xl md:text-[44px] font-black leading-tight`}>
+            <h2 className={`${heading} text-2xl sm:text-3xl md:text-[44px] font-black leading-tight`}>
               TODAY IS A GREAT DAY TO
               <br />
               GET IN TOUCH WITH <span className="text-[#D6FF21]">{BRAND_NAME.toUpperCase()}</span>.
             </h2>
-            <p className="mt-4 text-white/80 max-w-xl">
+            <p className="mt-3 sm:mt-4 text-white/80 max-w-xl text-sm sm:text-base">
               To get started, tell us a little about you and a {BRAND_NAME} team member will reach out.
             </p>
 
-            <ul className="mt-8 space-y-6 text-white/85">
+            <ul className="mt-6 sm:mt-8 space-y-4 sm:space-y-6 text-white/85 text-sm sm:text-base">
               <Bullet>
                 Discover how {BRAND_NAME}’s skilled team can handle all your influencer marketing requirements from
                 start to finish.
@@ -280,7 +280,7 @@ Excited to collaborate!`;
                 <button
                   type="submit"
                   disabled={!canSubmit}
-                  className={`w-full rounded-xl px-6 py-4 text-center font-semibold transition ${
+                  className={`w-full rounded-lg sm:rounded-xl px-5 sm:px-6 py-3.5 sm:py-4 text-center text-sm sm:text-base font-semibold transition min-h-[52px] ${
                     canSubmit
                       ? "bg-[#D6FF21] text-black hover:shadow-[0_12px_50px_rgba(214,255,33,0.35)]"
                       : "bg-white/10 text-white/50 cursor-not-allowed"
@@ -289,7 +289,7 @@ Excited to collaborate!`;
                   Submit via WhatsApp
                 </button>
 
-                <p className="text-center text-xs text-white/50">
+                <p className="text-center text-[11px] sm:text-xs text-white/50">
                   We'll open WhatsApp with your details pre-filled. No spam, ever.
                 </p>
               </form>

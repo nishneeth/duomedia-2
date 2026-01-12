@@ -73,11 +73,11 @@ export default function HowWeMakeItHappen() {
               <span className="pointer-events-none absolute bottom-0 right-[-40%] h-[3px] w-[60%] bg-gradient-to-l from-transparent via-[#D6FF21]/80 to-transparent animate-[bottomLight_4.5s_ease-in-out_infinite] blur-sm z-10 mix-blend-screen"
               />
 
-              <h3 className="mt-4 text-[35px] leading-tight font-extrabold font-display">
+              <h3 className="mt-3 sm:mt-4 text-[28px] sm:text-[32px] md:text-[35px] leading-tight font-extrabold font-display">
                 {s.title}
               </h3>
 
-              <p className="mt-3 text-lg leading-relaxed text-white/50">
+              <p className="mt-2 sm:mt-3 text-base sm:text-lg leading-relaxed text-white/50">
                 {s.desc}
               </p>
 
@@ -87,7 +87,7 @@ export default function HowWeMakeItHappen() {
                 alt=""
                 width={220}
                 height={220}
-                className="pointer-events-none absolute bottom-[-40px] right-[-11px] opacity-80"
+                className="pointer-events-none absolute bottom-[-30px] sm:bottom-[-35px] md:bottom-[-40px] right-[-8px] sm:right-[-10px] md:right-[-11px] opacity-80 w-[160px] sm:w-[190px] md:w-[220px]"
               />
             </motion.div>
           ))}

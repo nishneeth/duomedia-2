@@ -1,5 +1,6 @@
 // src/app/layout.tsx
 import "./globals.css";
+import "./mobile-responsive.css"; // Mobile responsive enhancements
 import "./performance.css"; // Performance optimizations
 import "./gsap-config"; // Initialize GSAP configuration
 import type { Metadata } from "next";

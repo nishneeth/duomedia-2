@@ -118,15 +118,15 @@ function Hero() {
       </div> */}
 
       {/* Content ABOVE slider */}
-      <div className="relative z-20 mx-auto max-w-6xl px-6 py-24 text-center flex flex-col items-center justify-center" style={{marginTop: "10px"}}>
+      <div className="relative z-20 mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20 md:py-24 text-center flex flex-col items-center justify-center" style={{marginTop: "10px"}}>
         {/* Eyebrow turned into a pill/button card */}
         <div className="flex justify-center">
-          <span className="inline-flex items-center gap-2 rounded-full px-8 py-4
-                           font-semibold text-white bg-white/10 ring-1 ring-white/15
+          <span className="inline-flex items-center gap-2 rounded-full px-4 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4
+                           text-sm sm:text-base font-semibold text-white bg-white/10 ring-1 ring-white/15
                            shadow-[0_8px_28px_rgba(255,153,51,0.18)]
                            hover:bg-white/15 transition">
             <span className="h-2 w-2 rounded-full bg-[#D6FF21]" />
-            Build your market with us
+            <span className="whitespace-nowrap">Build your market with us</span>
           </span>
         </div>
         <SectionHeading
@@ -136,16 +136,16 @@ function Hero() {
         />
 
         {/* CTAs */}
-        <div className="mt-8 flex items-center justify-center gap-4">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-full bg-[#D6FF21] px-6 py-3 font-semibold text-black hover:shadow-[0_10px_40px_rgba(214,255,33,0.35)] transition-shadow"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-[#D6FF21] px-5 sm:px-6 py-3 text-sm sm:text-base font-semibold text-black hover:shadow-[0_10px_40px_rgba(214,255,33,0.35)] transition-shadow min-h-[48px]"
           >
             Chat with us
           </Link>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-white bg-black/10 ring-1 ring-white/15 hover:bg-white/15 transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full px-5 sm:px-6 py-3 text-sm sm:text-base font-semibold text-white bg-black/10 ring-1 ring-white/15 hover:bg-white/15 transition min-h-[48px]"
           >
             View Portfolio
           </Link>

@@ -21,9 +21,9 @@ export default function AboutPage() {
   return (
     <main className="bg-black text-white">
       {/* ===== Trust strip (marquee) ===== */}
-      <section className="py-24 overflow-x-hidden">
-        <div className="mx-auto max-w-7xl px-6 overflow-x-hidden">
-          <p className="text-center text-white/80 text-lg">
+      <section className="py-12 sm:py-16 md:py-24 overflow-x-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 overflow-x-hidden">
+          <p className="text-center text-white/80 text-sm sm:text-base md:text-lg">
             Companies trusting{" "}
             <span className="text-[#D6FF21] font-semibold">Duo Media</span> for
             their branding &amp; marketing.

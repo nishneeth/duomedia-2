@@ -351,15 +351,15 @@ const slideCount = slides.length;
     <section className="bg-black text-white overflow-x-hidden">
 
       {/* ===== Trust Strip (marquee) ===== */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <p className="text-center text-white/80 text-lg">
+      <section className="py-12 sm:py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <p className="text-center text-white/80 text-sm sm:text-base md:text-lg">
             Companies trusting{" "}
             <span className="text-[#D6FF21] font-semibold">Duo Media</span> for
             their branding &amp; marketing.
           </p>
 
-          <div className="mt-8 relative overflow-hidden">
+          <div className="mt-6 sm:mt-8 relative overflow-hidden">
             {/* soft edge mask */}
             <div
               className="pointer-events-none absolute inset-0 z-10"
@@ -370,7 +370,7 @@ const slideCount = slides.length;
                   "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
               }}
             />
-            <div className="logos-track flex items-center gap-12 will-change-transform">
+            <div className="logos-track flex items-center gap-8 sm:gap-10 md:gap-12 will-change-transform">
               {logoItems.map((l, i) => (
                 <img
                   key={`${l.src}-${i}`}
@@ -378,7 +378,7 @@ const slideCount = slides.length;
                   alt={l.alt}
                   width={l.w}
                   height={l.h}
-                  className="h-[48px] md:h-[60px] w-auto object-contain brightness-200 contrast-0 invert"
+                  className="h-[36px] sm:h-[48px] md:h-[60px] w-auto object-contain brightness-200 contrast-0 invert"
                 />
               ))}
             </div>
@@ -459,17 +459,17 @@ const slideCount = slides.length;
 
 
       {/* ===== Header for slider ===== */}
-      <div className="mx-auto max-w-6xl px-6 text-center">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
-          className={`${displayClass} text-4xl md:text-6xl font-bold text-[#D6FF21]`}
+          className={`${displayClass} text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#D6FF21]`}
         >
           How We Make It Happen
         </motion.h2>
-        <p className="mt-4 text-white/70 text-lg max-w-3xl mx-auto">
+        <p className="mt-3 sm:mt-4 text-white/70 text-sm sm:text-base md:text-lg max-w-3xl mx-auto px-4 sm:px-0">
           From scroll-stopping content to sales that stick — here's how we turn
           attention into action, one smart step at a time.
         </p>
@@ -551,9 +551,9 @@ const slideCount = slides.length;
         </div>
       </div>
       </section> */}
-      <section className="relative w-full h-[600px] overflow-hidden">
+      <section className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] overflow-hidden">
   <motion.div
-    className="flex h-full items-center gap-12"
+    className="flex h-full items-center gap-8 sm:gap-10 md:gap-12"
     animate={{ x: [0, `-${slideCount * 65}vw`] }}
     transition={{
       repeat: Infinity,
@@ -567,12 +567,12 @@ const slideCount = slides.length;
         return (
           <div
             key={`heart-${i}`}
-            className="shrink-0 w-[65vw] md:w-[640px] h-full flex items-center justify-center"
+            className="shrink-0 w-[65vw] sm:w-[60vw] md:w-[640px] h-full flex items-center justify-center"
           >
             <img
               src="/about/heart_no_bg.png"
               alt="Love from the audience"
-              className="max-h-64 md:max-h-[360px] w-auto object-contain"
+              className="max-h-48 sm:max-h-64 md:max-h-[360px] w-auto object-contain"
             />
           </div>
         );
@@ -582,13 +582,13 @@ const slideCount = slides.length;
       return (
         <div
           key={`${s.title}-${i}`}
-          className="relative shrink-0 w-[65vw] md:w-[640px] h-full flex flex-col items-center justify-center text-center"
+          className="relative shrink-0 w-[65vw] sm:w-[60vw] md:w-[640px] h-full flex flex-col items-center justify-center text-center px-4 sm:px-0"
         >
           {/* Title + Deco */}
           <div className="relative inline-block">
             <h3
               className={`${displayClass} whitespace-pre-line
-                text-5xl sm:text-6xl md:text-6xl lg:text-7xl
+                text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl
                 font-extrabold text-[#D6FF21] leading-tight`}
             >
               {s.title}
@@ -598,16 +598,15 @@ const slideCount = slides.length;
               <img
                 src={s.decoBR}
                 alt=""
-                className="pointer-events-none absolute -top-14 -right-2 md:-right-4
-
-                           w-20 sm:w-24 md:w-28 h-auto object-contain"
+                className="pointer-events-none absolute -top-8 sm:-top-10 md:-top-14 -right-1 sm:-right-2 md:-right-4
+                           w-14 sm:w-16 md:w-20 lg:w-24 xl:w-28 h-auto object-contain"
               />
             )}
           </div>
 
           {/* Blurb */}
           {s.blurb && (
-            <p className="mt-4 text-white/80 text-base sm:text-lg max-w-[560px]">
+            <p className="mt-3 sm:mt-4 text-white/80 text-sm sm:text-base md:text-lg max-w-[560px]">
               {s.blurb}
             </p>
           )}

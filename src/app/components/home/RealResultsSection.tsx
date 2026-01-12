@@ -74,21 +74,21 @@ const items: CaseItem[] = [
 export default function RealResultsSection() {
   return (
     <section className="bg-[#0b0b0b] text-white">
-      <div className="mx-auto max-w-6xl px-6 pt-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-12 sm:pt-16 md:pt-24">
         <div className="text-center">
           <h2
-            className={`${poppins.className} text-[#D6FF21] text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
+            className={`${poppins.className} text-[#D6FF21] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-[0_0_24px_rgba(214,255,33,0.35)]`}
           >
             Real Brands. Real Results.
           </h2>
-          <p className="mt-3 text-white/70 max-w-2xl mx-auto">
+          <p className="mt-3 text-white/70 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0">
             Everything you need to go from cluttered to clear — and from noticed
             to remembered.
           </p>
         </div>
 
         {/* Mobile: 1 per row, Desktop: 2 per row */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 pb-12 sm:pb-16 md:pb-20">
           {items.map((it, i) => (
             <CaseCard key={i} item={it} />
           ))}
@@ -108,11 +108,11 @@ function CaseCard({ item }: { item: CaseItem }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.45 }}
-      className="group relative block overflow-hidden rounded-[28px] ring-1 ring-white/10 bg-black"
+      className="group relative block overflow-hidden rounded-[20px] sm:rounded-[24px] md:rounded-[28px] ring-1 ring-white/10 bg-black"
     >
       {/* Media */}
       <div className="relative">
-        <div className="relative aspect-[1080/1300] md:max-h-[1035px] w-full overflow-hidden">
+        <div className="relative aspect-[9/11] sm:aspect-[1080/1300] md:max-h-[1035px] w-full overflow-hidden">
           
           {/* Base media (video or image) */}
           {video ? (
@@ -150,18 +150,18 @@ function CaseCard({ item }: { item: CaseItem }) {
 
       {/* Overlay content (UNCHANGED) */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-end">
-        <div className="px-5 pb-4">
-          <span className="inline-block rounded-full bg-[#1671FF] text-white text-xs font-semibold px-3 py-1 mb-3">
+        <div className="px-4 sm:px-5 pb-3 sm:pb-4">
+          <span className="inline-block rounded-full bg-[#1671FF] text-white text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1 mb-2 sm:mb-3">
             {tag}
           </span>
-          <h3 className={`${poppins.className} text-2xl md:text-[28px] font-extrabold drop-shadow`}>
+          <h3 className={`${poppins.className} text-xl sm:text-2xl md:text-[28px] font-extrabold drop-shadow`}>
             {brand}
           </h3>
-          <p className="mt-1 text-white/85 max-w-[46ch]">{blurb}</p>
+          <p className="mt-1 text-white/85 max-w-[46ch] text-xs sm:text-sm md:text-base">{blurb}</p>
         </div>
 
-        <div className="px-5 pb-5">
-          <div className="grid grid-cols-3 gap-2 rounded-2xl bg-[#D6FF21] text-black px-4 py-4">
+        <div className="px-4 sm:px-5 pb-4 sm:pb-5">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 rounded-xl sm:rounded-2xl bg-[#D6FF21] text-black px-3 sm:px-4 py-3 sm:py-4">
             <Stat label="Creators" value={stats.creators} />
             <Stat label="Total Views" value={stats.views} />
             <Stat label="Total Reach" value={stats.reach} />
@@ -209,11 +209,11 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div ref={ref} className="text-center">
       <div
-        className={`${poppins.className} text-2xl md:text-[26px] font-extrabold leading-none`}
+        className={`${poppins.className} text-lg sm:text-xl md:text-2xl lg:text-[26px] font-extrabold leading-none`}
       >
         {displayValue}
       </div>
-      <div className="text-[12px] md:text-[13px] font-medium opacity-80">
+      <div className="text-[10px] sm:text-[11px] md:text-[13px] font-medium opacity-80">
         {label}
       </div>
     </div>

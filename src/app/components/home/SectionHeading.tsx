@@ -20,7 +20,7 @@ export default function SectionHeading({
   return (
     <div className={center ? "text-center" : "text-left"}>
       {eyebrow && (
-        <p className="text-white/60 text-sm md:text-base tracking-wide">
+        <p className="text-white/60 text-xs sm:text-sm md:text-base tracking-wide">
           {eyebrow}
         </p>
       )}
@@ -34,17 +34,18 @@ export default function SectionHeading({
         className={[
           headingClass || "font-display", 
           "font-extrabold",        // 👈 default heading font
-          "mt-4 text-[#D6FF21]",
-          "text-4xl md:text-5xl lg:text-6xl",
-          "leading-[0.95] tracking-[-0.02em]",
+          "mt-3 sm:mt-4 text-[#D6FF21]",
+          "text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
+          "leading-[1.05] sm:leading-[0.95] tracking-[-0.02em]",
           "drop-shadow-[0_0_24px_rgba(214,255,33,0.25)]",
+          "px-4 sm:px-0",
         ].join(" ")}
       >
         {title}
       </motion.h2>
 
       {subtitle && (
-        <p className="mt-4 text-white/70 max-w-2xl mx-auto">
+        <p className="mt-3 sm:mt-4 text-white/70 max-w-2xl mx-auto text-sm sm:text-base px-4 sm:px-0">
           {subtitle}
         </p>
       )}
