@@ -20,7 +20,7 @@
   button,
   a.inline-flex,
   .btn {
-    font-size: 0.875rem !important; /* 14px */
+    font-size: 0.875rem !important;
     padding: 0.75rem 1.25rem !important;
   }
 }
@@ -29,47 +29,47 @@
 @media (max-width: 640px) {
   /* Headings */
   h1,
-  [class*="text-6xl"],
-  [class*="text-5xl"] {
-    font-size: clamp(1.875rem, 7vw, 2.5rem) !important; /* 30-40px */
+  [class*="text-6xl"]:not(.logo),
+  [class*="text-5xl"]:not(.logo) {
+    font-size: clamp(1.875rem, 7vw, 2.5rem) !important;
     line-height: 1.1 !important;
   }
   
   h2,
-  [class*="text-4xl"] {
-    font-size: clamp(1.5rem, 6vw, 2rem) !important; /* 24-32px */
+  [class*="text-4xl"]:not(.logo) {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
     line-height: 1.15 !important;
   }
   
   h3,
-  [class*="text-3xl"] {
-    font-size: clamp(1.25rem, 5vw, 1.75rem) !important; /* 20-28px */
+  [class*="text-3xl"]:not(.logo) {
+    font-size: clamp(1.25rem, 5vw, 1.75rem) !important;
     line-height: 1.2 !important;
   }
   
   h4,
-  [class*="text-2xl"] {
-    font-size: clamp(1.125rem, 4.5vw, 1.5rem) !important; /* 18-24px */
+  [class*="text-2xl"]:not(.logo) {
+    font-size: clamp(1.125rem, 4.5vw, 1.5rem) !important;
     line-height: 1.25 !important;
   }
   
   /* Body text */
   p,
   [class*="text-base"] {
-    font-size: clamp(0.875rem, 3.5vw, 1rem) !important; /* 14-16px */
+    font-size: clamp(0.875rem, 3.5vw, 1rem) !important;
     line-height: 1.6 !important;
   }
   
   [class*="text-lg"] {
-    font-size: clamp(1rem, 4vw, 1.125rem) !important; /* 16-18px */
+    font-size: clamp(1rem, 4vw, 1.125rem) !important;
   }
   
   [class*="text-sm"] {
-    font-size: clamp(0.8125rem, 3vw, 0.875rem) !important; /* 13-14px */
+    font-size: clamp(0.8125rem, 3vw, 0.875rem) !important;
   }
   
   [class*="text-xs"] {
-    font-size: clamp(0.75rem, 2.5vw, 0.8125rem) !important; /* 12-13px */
+    font-size: clamp(0.75rem, 2.5vw, 0.8125rem) !important;
   }
 }
 
@@ -141,21 +141,21 @@
 /* ===== MOBILE CARD & CONTAINER ADJUSTMENTS ===== */
 @media (max-width: 640px) {
   /* Rounded corners - reduce for mobile */
-  [class*="rounded-\\[28px\\]"],
-  [class*="rounded-\\[24px\\]"] {
-    border-radius: 1rem !important; /* 16px */
+  [class*="rounded-\[28px\]"],
+  [class*="rounded-\[24px\]"] {
+    border-radius: 1rem !important;
   }
   
-  [class*="rounded-\\[20px\\]"] {
-    border-radius: 0.875rem !important; /* 14px */
+  [class*="rounded-\[20px\]"] {
+    border-radius: 0.875rem !important;
   }
   
   /* Minimum heights */
-  [class*="min-h-\\[350px\\]"] {
+  [class*="min-h-\[350px\]"] {
     min-height: 280px !important;
   }
   
-  [class*="min-h-\\[260px\\]"] {
+  [class*="min-h-\[260px\]"] {
     min-height: 200px !important;
   }
   
@@ -165,6 +165,18 @@
   [class*="max-w-5xl"],
   [class*="max-w-4xl"] {
     max-width: 100% !important;
+  }
+  
+  /* Service card images - reduce height on mobile */
+  [class*="absolute"][class*="right-"][class*="bottom-"] img,
+  [class*="absolute"][class*="left-"][class*="bottom-"] img {
+    max-height: 200px !important;
+    width: auto !important;
+  }
+  
+  /* Video card containers - match video height on mobile */
+  .marquee-track > div {
+    height: 380px !important;
   }
 }
 
@@ -198,9 +210,13 @@
 
 /* ===== MOBILE IMAGE OPTIMIZATION ===== */
 @media (max-width: 640px) {
-  img,
+  /* Exclude navbar logo and trust strip logos */
+  img:not([alt*="Logo"]):not([class*="brightness-200"]),
   video {
     max-width: 100% !important;
+  }
+  
+  video {
     height: auto !important;
   }
 }

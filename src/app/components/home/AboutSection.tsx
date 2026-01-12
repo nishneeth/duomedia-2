@@ -370,7 +370,7 @@ const slideCount = slides.length;
                   "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
               }}
             />
-            <div className="logos-track flex items-center gap-8 sm:gap-10 md:gap-12 will-change-transform">
+            <div className="logos-track flex items-center gap-12 will-change-transform">
               {logoItems.map((l, i) => (
                 <img
                   key={`${l.src}-${i}`}
@@ -378,7 +378,7 @@ const slideCount = slides.length;
                   alt={l.alt}
                   width={l.w}
                   height={l.h}
-                  className="h-[36px] sm:h-[48px] md:h-[60px] w-auto object-contain brightness-200 contrast-0 invert"
+                  className="h-[48px] md:h-[60px] w-auto object-contain brightness-200 contrast-0 invert"
                 />
               ))}
             </div>

@@ -43,7 +43,7 @@ export default function Navbar() {
     alt="Duo Media Logo"
     width={120}
     height={40}
-    className="h-9 sm:h-10 md:h-12 w-auto"
+    className="h-12 w-auto"
   />
 </Link>
 
