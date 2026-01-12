@@ -4,6 +4,7 @@ import { useEffect, useRef, memo } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
+// Import HyperSpeed CSS styles
 import './HyperSpeed.css';
 
 const Hyperspeed = memo(({
