@@ -20,6 +20,23 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'three', 'gsap', 'lucide-react'],
   },
+
+  // Redirect non-www to www
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'duomediaa.com',
+          },
+        ],
+        destination: 'https://www.duomediaa.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
